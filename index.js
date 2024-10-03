@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyparser from "body-parser";
+import crudroutes from "./routes/crudroutes/index.js"
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
