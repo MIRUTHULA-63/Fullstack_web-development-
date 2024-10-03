@@ -1,6 +1,7 @@
 import Router from "express";
 import Restaurant from "../../models/restaurant.js";
 import Customer from "../../models/customer.js";
+import ReservationFields from "../../models/reservationfeilds.js";
 const router = Router();
 router.post("/goes", async (req, res) => {
   try {
@@ -80,4 +81,36 @@ router.delete("/basic/:id", async (req, res) => {
     res.status(500).send({ message: "error deleting customer", error });
   }
 });
+router.post("/gone", async (req, res) => {
+  try {
+    const reservationfields = ReservationFields(req.body);
+    await reservationfields.save();
+    res.send("Table created");
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get("/done/resv:id", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.findById(
+      requeat.params.id
+    );
+    res.send(reservationfields);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get("/done", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.find();
+    res.send(reservationfields);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+
+
 export default router;
