@@ -56,4 +56,28 @@ router.get("/ok", async (req, res) => {
     res.send(error);
   }
 });
+router.put("/cust/:id", async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!customer)
+      return res.status(404).send({ message: "customer not found" });
+    res.status(200).send(customer);
+  } catch (error) {
+    res.send("Error: " + error);
+  }
+});
+
+router.delete("/basic/:id", async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndDelete(req.params.id);
+    if (!customer)
+      return res.status(404).send({ message: "customer not found" });
+    res.status(200).send({ message: "customer deleted succesfully" });
+  } catch (error) {
+    res.status(500).send({ message: "error deleting customer", error });
+  }
+});
 export default router;

@@ -9,6 +9,7 @@ const PORT = process.env.PORT;
 app.use(bodyparser.json());
 app.use("/customer", crudroutes);
 app.use("/restaurant", crudroutes);
+app.use("/reservationfeilds",crudroutes);
 
 mongoose
   .connect(
