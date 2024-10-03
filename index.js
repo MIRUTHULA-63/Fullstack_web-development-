@@ -8,7 +8,6 @@ dotenv.config();
 const PORT = process.env.PORT;
 app.use(bodyparser.json());
 app.use("/customer", crudroutes);
-
 app.use("/restaurant", crudroutes);
 
 mongoose
