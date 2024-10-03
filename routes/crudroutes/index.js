@@ -110,7 +110,65 @@ router.get("/done", async (req, res) => {
     res.send(error);
   }
 });
+router.post("/gone", async (req, res) => {
+  try {
+    const reservationfields = ReservationFields(req.body);
+    await reservationfields.save();
+    res.send("Table created");
+  } catch (error) {
+    res.send(error);
+  }
+});
 
+router.get("/done", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.findById(
+      requeat.params.id
+    );
+    res.send(reservationfields);
+  } catch (error) {
+    res.send(error);
+  }
+});
 
+router.get("/done", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.find();
+    res.send(reservationfields);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.put("/reser/:id", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!reservationfields)
+      return res.status(404).send({ message: "field not found" });
+    res.status(200).send(reservationfields);
+  } catch (error) {
+    res.send("Error: " + error);
+  }
+});
+
+router.delete("/reserdel/:id", async (req, res) => {
+  try {
+    const reservationfields = await ReservationFields.findByIdAndDelete(
+      req.params.id
+    );
+    if (!reservationfields)
+      return res.status(404).send({ message: "field not found" });
+    res.status(200).send({ message: "Field deleted succesfully" });
+  } catch (error) {
+    res.status(500).send({ message: "error deleting field", error });
+  }
+});
 
 export default router;
